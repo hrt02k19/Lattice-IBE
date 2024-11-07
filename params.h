@@ -18,7 +18,7 @@ using std::complex;
 // N0 is the degree of the polynomial ring used. N0 must be a power of 2!
 // q0 is the modulus w.r.t. whom the integers are reduced. We suggest to take q0 prime
 //=====================================================================================
-#define N0 512
+#define N0 8
 #define q0 (1<<30)
 //======================================================================================
 
@@ -72,6 +72,13 @@ extern __inline__ uint64_t rdtsc(void) {
   uint64_t a, d;
   __asm__ volatile ("rdtsc" : "=a" (a), "=d" (d));
   return (d<<32) | a;
+}
+#elif defined __aarch64__  // Apple Silicon (ARM64) の場合
+extern __inline__ uint64_t rdtsc(void) {
+  uint64_t cntvct;
+  // ARM の system register "CNTVCT_EL0" からカウンタを取得する
+  asm volatile("mrs %0, cntvct_el0" : "=r" (cntvct));
+  return cntvct;
 }
 #endif
 

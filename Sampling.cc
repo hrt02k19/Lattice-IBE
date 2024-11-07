@@ -125,7 +125,7 @@ signed int Sample3(const RR_t sigma128)
     {
         x = Sample2(k);
         alea = ((RR_t)rand()) / LDRMX;
-        borne = exp( -x*x*( 1/(2*sigma*sigma) - 1/(2*k*k*sigma_1*sigma_1) )   );
+        borne = exp( -( 1/(2*sigma*sigma) - 1/(2*k*k*sigma_1*sigma_1) )*x*x   );
         assert(borne<=1);
         if(alea<borne)
         {
