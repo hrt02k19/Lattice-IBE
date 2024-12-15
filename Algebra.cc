@@ -248,7 +248,10 @@ ZZ_pX Inverse(const ZZX& f)
     ZZX rho_f, iphi;
     ZZ Res_f;
     ZZ_p Res_f_1;
-    XGCD(Res_f, rho_f, iphi, f, phi, 0);    
+    XGCD(Res_f, rho_f, iphi, f, phi, 0);
+    if (GCD(Res_f, q1) != 1) {
+        throw std::runtime_error("non-invertible!");
+    }
     inv(Res_f_1, conv<ZZ_p>(Res_f));
     assert(Res_f_1*conv<ZZ_p>(Res_f) == 1);
 
